@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Tea Emporium</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Boxicons for Icons -->
+    <link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        html {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%      { transform: translateX(-10px); }
+            75%      { transform: translateX(10px); }
+        }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-in-out; }
+        .shake-extreme { animation: shake 0.6s; }
+
+        /* Custom Tea-themed colors */
+        .bg-teal-50 { background-color: #f0fdfa; }
+        .bg-teal-100 { background-color: #ccfbf1; }
+        .bg-teal-600 { background-color: #0d9488; }
+        .bg-teal-700 { background-color: #0f766e; }
+        .text-teal-600 { color: #0d9488; }
+        .hover\:bg-teal-700:hover { background-color: #0f766e; }
+    </style>
+</head>
+<body class="bg-teal-50 flex flex-col min-h-screen">
+
+<!-- Navbar -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#home" class="flex items-center">
+            <i class='bx bx-leaf text-teal-600 text-3xl mr-2'></i>
+            <span class="text-xl font-bold text-teal-600">Luxury Tea Emporium</span>
+        </a>
+
+        <!-- Menü-Icon (Mobil) -->
+        <button id="menu-toggle" class="md:hidden text-2xl text-gray-700 focus:outline-none">
+            <i class="bx bx-menu"></i>
+        </button>
+
+        <!-- Links -->
+        <nav id="navbar" class="hidden md:flex space-x-8 text-gray-700 font-medium">
+            <a href="#home" class="hover:text-teal-600">Startseite</a>
+            <a href="#about" class="hover:text-teal-600">Unsere Geschichte</a>
+            <a href="#products" class="hover:text-teal-600">Teekollektion</a>
+            <a href="#customers" class="hover:text-teal-600">Erfahrungsberichte</a>
+            <a href="index.html" class="text-red-500 font-medium hover:text-red-600 transition">Abmelden</a>
+        </nav>
+
+        <!-- Icons -->
+        <div class="flex items-center space-x-4">
+            <!-- Warenkorb-Icon -->
+            <button id="cart-button" class="relative text-2xl text-gray-700 focus:outline-none">
+                <i class="bx bx-cart-alt"></i>
+                <span id="cart-count" class="absolute -top-1 -right-2 bg-teal-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <!-- Such-Icon -->
+            <button id="search-toggle" class="text-2xl text-gray-700 focus:outline-none">
+                <i class="bx bx-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Suchfeld -->
+    <div id="search-box" class="hidden bg-white shadow-md px-6 sm:px-8 lg:px-10 py-2">
+        <input
+                type="text"
+                placeholder="Unsere Teekollektion durchsuchen..."
+                class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-teal-500"
+        />
+    </div>
+
+    <!-- Mobil-Menü (versteckt) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+        <nav class="flex flex-col space-y-2 px-6 py-4 text-gray-700 font-medium">
+            <a href="#home" class="hover:text-teal-600">Startseite</a>
+            <a href="#about" class="hover:text-teal-600">Unsere Geschichte</a>
+            <a href="#products" class="hover:text-teal-600">Teekollektion</a>
+            <a href="#customers" class="hover:text-teal-600">Erfahrungsberichte</a>
+            <a href="#login" class="hover:text-teal-600">Login</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Hauptinhalt -->
+<main class="flex-grow">
+
+    <!-- Hero-Sektion -->
+    <section id="home" class="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-16 gap-8 animate-fadeIn">
+        <div class="w-full md:w-1/2 space-y-6 text-gray-800">
+            <h1 class="text-4xl md:text-5xl font-bold">Entdecke die Kunst des <span class="text-teal-600">Premium-Tees</span></h1>
+            <p class="text-lg text-gray-600">
+                Handverlesen aus den besten Teeplantagen der Welt erzählt jedes Blatt eine Geschichte von Tradition und Handwerk.
+                Erlebe Tee wie nie zuvor mit unserer exklusiven Auswahl seltener und exquisiter Mischungen.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products" class="px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition text-center">
+                    Kollektion entdecken
+                </a>
+                <a href="#about" class="px-6 py-3 border border-teal-600 text-teal-600 font-medium rounded-lg hover:bg-teal-50 transition text-center">
+                    Unsere Geschichte
+                </a>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2">
+            <img src="https://images.unsplash.com/photo-1547965010-3189f704431b?q=80&w=1622&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Premium-Tee-Kollektion" class="w-full rounded-lg shadow-lg object-cover h-96" />
+        </div>
+    </section>
+
+    <!-- Über uns -->
+    <section id="about" class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Teeplantage" class="w-full rounded-lg shadow-lg" />
+                </div>
+                <div class="w-full md:w-1/2 space-y-6">
+                    <h2 class="text-3xl font-bold text-gray-800">Unsere Tee-Reise</h2>
+                    <p class="text-gray-600">
+                        Gegründet 2010 begann das Luxury Tea Emporium mit einer einfachen Mission: Den besten Tee der Welt an anspruchsvolle Genießer zu bringen.
+                        Unser Gründer, ein Tee-Meister in der dritten Generation, reiste durch Asien, um direkte Beziehungen zu kleinen, familiengeführten Teeplantagen aufzubauen.
+                    </p>
+                    <p class="text-gray-600">
+                        Heute sind wir stolz darauf, eine unvergleichliche Auswahl seltener Tees anzubieten, von unserem Expertenteam persönlich ausgewählt.
+                        Von den nebligen Bergen Darjeelings bis zu den alten Teewäldern Yunnans – wir beziehen nur die außergewöhnlichsten Blätter.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="bg-teal-50 p-4 rounded-lg">
+                            <i class='bx bx-check-circle text-teal-600 text-2xl mb-2'></i>
+                            <h3 class="font-semibold">Direkter Handel</h3>
+                            <p class="text-sm text-gray-600">Direkte Zusammenarbeit mit Tee-Bauern</p>
+                        </div>
+                        <div class="bg-teal-50 p-4 rounded-lg">
+                            <i class='bx bx-leaf text-teal-600 text-2xl mb-2'></i>
+                            <h3 class="font-semibold">Bio</h3>
+                            <p class="text-sm text-gray-600">100% pestizidfrei</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produkte -->
+    <section id="products" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Unsere Premium-Tee-Kollektion</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Jeder Tee wird sorgfältig ausgewählt und verpackt, um das frischeste Erlebnis zu gewährleisten.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- White Peony Tea -->
+                <div class="bg-teal-50 rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1589311581125-b87aed03a618?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="White Peony Tee" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">White Peony</h3>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-medium px-2.5 py-0.5 rounded">Limitiert</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Ein zarter Weißtee mit floralen Noten, handgeerntet in der Provinz Fujian.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-gray-900">29.90 Fr.</span>
+                            <button
+                                    class="add-to-cart bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition flex items-center gap-2"
+                                    data-product-id="1"
+                                    data-product-name="White Peony Tea"
+                                    data-product-price="29.90"
+                            >
+                                <i class='bx bx-cart-alt'></i> Hinzufügen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Darjeeling First Flush -->
+                <div class="bg-teal-50 rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1651834689695-3b88ae5c533a?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Darjeeling First Flush" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Darjeeling First Flush</h3>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-medium px-2.5 py-0.5 rounded">Neu</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Der „Champagner unter den Tees“ mit Muskatel-Noten aus den Ausläufern des Himalaya.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-gray-900">34.50 Fr.</span>
+                            <button
+                                    class="add-to-cart bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition flex items-center gap-2"
+                                    data-product-id="2"
+                                    data-product-name="Darjeeling First Flush"
+                                    data-product-price="34.50"
+                            >
+                                <i class='bx bx-cart-alt'></i> Hinzufügen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aged Pu-erh -->
+                <div class="bg-teal-50 rounded-xl shadow-lg overflow-hidden transition-transform hover:scale-105">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Aged Pu-erh Tee" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-gray-800">Aged Pu-erh (2008)</h3>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-medium px-2.5 py-0.5 rounded">Selten</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Ein 15 Jahre alter fermentierter Tee mit erdiger Komplexität aus der Provinz Yunnan.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-gray-900">89.00 Fr.</span>
+                            <button
+                                    class="add-to-cart bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition flex items-center gap-2"
+                                    data-product-id="3"
+                                    data-product-name="Aged Pu-erh (2008)"
+                                    data-product-price="89.00"
+                            >
+                                <i class='bx bx-cart-alt'></i> Hinzufügen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Erfahrungsberichte -->
+    <section id="customers" class="py-16 bg-teal-600 text-white">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+            <h2 class="text-3xl font-bold text-center mb-12">Was unsere Connaisseurs sagen</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Erfahrungsbericht 1 -->
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <div class="flex mb-4">
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                    </div>
+                    <p class="italic mb-6">„Der White Peony ist einfach herrlich. Das zarte Blumenaroma versetzt mich bei jedem Schluck in die Teeplantagen von Fujian.“</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sarah M." class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <h4 class="font-bold">Sarah M.</h4>
+                            <p class="text-teal-100 text-sm">Tee-Sommelier</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Erfahrungsbericht 2 -->
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <div class="flex mb-4">
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                    </div>
+                    <p class="italic mb-6">„Als langjähriger Teesammler kann ich mit Zuversicht sagen, dass Luxury Tea Emporium das außergewöhnlichste Pu-erh außerhalb Chinas bezieht.“</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James T." class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <h4 class="font-bold">James T.</h4>
+                            <p class="text-teal-100 text-sm">Tee-Sammler</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Erfahrungsbericht 3 -->
+                <div class="bg-white bg-opacity-10 p-6 rounded-xl backdrop-blur-sm">
+                    <div class="flex mb-4">
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star text-yellow-300"></i>
+                        <i class="bx bxs-star-half text-yellow-300"></i>
+                    </div>
+                    <p class="italic mb-6">„Der Darjeeling First Flush kam perfekt frisch an. Der Muskatel-Charakter ist ausgeprägt und köstlich. Werde wieder bestellen!“</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Emma R." class="w-12 h-12 rounded-full mr-4 object-cover" />
+                        <div>
+                            <h4 class="font-bold">Emma R.</h4>
+                            <p class="text-teal-100 text-sm">Tee-Bloggerin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter-Sektion -->
+    <section class="py-16 bg-white">
+        <div class="max-w-2xl mx-auto px-6 sm:px-8 lg:px-10 text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Werde Teil unseres Teekreises</h2>
+            <p class="text-gray-600 mb-8">
+                Abonniere, um exklusive Angebote, Tee-Bildung und ersten Zugriff auf Neuankömmlinge zu erhalten.
+            </p>
+            <form
+                    id="newsletter-form"
+                    action="https://formspree.io/f/xzzgzydl"
+                    method="POST"
+                    class="flex flex-col sm:flex-row gap-4"
+            >
+                <input
+                        type="email"
+                        name="email"
+                        placeholder="Deine E-Mail-Adresse"
+                        required
+                        class="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500 bg-gray-50 text-gray-700"
+                />
+                <button
+                        type="submit"
+                        class="px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition"
+                >
+                    Abonnieren
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Danke-Popup (versteckt) -->
+    <div id="thank-you-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Vielen Dank!</h3>
+            <p class="text-gray-600 mb-6">Deine Anmeldung war erfolgreich.</p>
+            <button
+                    id="close-popup"
+                    class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
+            >
+                Schließen
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('newsletter-form');
+            const popup = document.getElementById('thank-you-popup');
+            const closeBtn = document.getElementById('close-popup');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    popup.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert('Beim Absenden ist ein Fehler aufgetreten. Bitte versuche es erneut.');
+                }
+            });
+
+            closeBtn.addEventListener('click', () => {
+                popup.classList.add('hidden');
+            });
+
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    popup.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+    <!-- Warenkorb-Modal (versteckt) -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white w-11/12 md:w-1/2 max-w-lg rounded-lg p-6 relative">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800">Deine Tee-Auswahl</h3>
+            <div id="cart-items" class="space-y-4 max-h-64 overflow-y-auto">
+                <!-- Warenkorb-Elemente werden hier eingefügt -->
+            </div>
+            <div class="border-t border-gray-300 pt-4 mt-4 flex justify-between items-center">
+                <p class="text-lg font-medium text-gray-800">Gesamt:</p>
+                <p id="cart-total-price" class="text-lg font-semibold text-gray-900">0 Fr.</p>
+            </div>
+            <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                <button id="continue-shopping" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex-grow">
+                    Weiter einkaufen
+                </button>
+                <button class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition flex-grow" onclick="window.location.href='checkout.html'">
+                    Zur Kasse
+                </button>
+            </div>
+            <button id="close-cart" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none">
+                <i class="bx bx-x text-2xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Kontaktinformationen -->
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <i class="bx bx-leaf text-teal-400 text-3xl mr-2"></i>
+                    <span class="text-xl font-bold text-white">Luxury Tea Emporium</span>
+                </div>
+                <p class="text-gray-400">
+                    Tea Master's Lane 12, 8001 Zürich<br/>
+                    +41 44 123 45 67<br/>
+                    contact@luxurytea.ch
+                </p>
+                <div class="flex space-x-4 text-xl">
+                    <a href="#" class="hover:text-teal-400"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="hover:text-teal-400"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="hover:text-teal-400"><i class="bx bxl-pinterest"></i></a>
+                    <a href="#" class="hover:text-teal-400"><i class="bx bxl-twitter"></i></a>
+                </div>
+            </div>
+
+            <!-- Kontaktformular -->
+            <div>
+                <h3 class="text-lg font-semibold text-white mb-4">Kontaktiere uns</h3>
+                <form
+                        id="contact-form-footer"
+                        action="https://formspree.io/f/xzzgzydl"
+                        method="POST"
+                        class="space-y-4"
+                >
+                    <div>
+                        <label for="footer-name" class="block text-sm text-gray-400 mb-1">Name</label>
+                        <input
+                                type="text"
+                                id="footer-name"
+                                name="name"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500 bg-gray-900 text-gray-100"
+                        />
+                    </div>
+                    <div>
+                        <label for="footer-email" class="block text-sm text-gray-400 mb-1">E-Mail</label>
+                        <input
+                                type="email"
+                                id="footer-email"
+                                name="_replyto"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500 bg-gray-900 text-gray-100"
+                        />
+                    </div>
+                    <div>
+                        <label for="footer-message" class="block text-sm text-gray-400 mb-1">Nachricht</label>
+                        <textarea
+                                id="footer-message"
+                                name="message"
+                                rows="4"
+                                required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500 bg-gray-900 text-gray-100"
+                        ></textarea>
+                    </div>
+                    <button
+                            type="submit"
+                            class="w-full px-6 py-3 bg-teal-600 text-white font-medium rounded-lg hover:bg-teal-700 transition"
+                    >
+                        Nachricht senden
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+            <p>&copy; 2025 Luxury Tea Emporium. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+</main>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Search Box Toggle
+    const searchToggle = document.getElementById('search-toggle');
+    const searchBox = document.getElementById('search-box');
+    searchToggle.addEventListener('click', () => {
+        searchBox.classList.toggle('hidden');
+    });
+
+    // Warenkorb-Funktionalität
+    const cartCountEl = document.getElementById('cart-count');
+    const cartButton = document.getElementById('cart-button');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCartBtn = document.getElementById('close-cart');
+    const continueShoppingBtn = document.getElementById('continue-shopping');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalPriceEl = document.getElementById('cart-total-price');
+
+    // Warenkorb-Modal öffnen
+    cartButton.addEventListener('click', () => {
+        updateCartDisplay();
+        cartModal.classList.remove('hidden');
+    });
+
+    // Warenkorb-Modal schließen
+    closeCartBtn.addEventListener('click', () => {
+        cartModal.classList.add('hidden');
+    });
+
+    // Weiter einkaufen: Modal schließen und zu Produkten scrollen
+    continueShoppingBtn.addEventListener('click', () => {
+        cartModal.classList.add('hidden');
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    cartModal.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+            cartModal.classList.add('hidden');
+        }
+    });
+
+    // In den Warenkorb legen
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const id = btn.dataset.productId;
+            const name = btn.dataset.productName;
+            const price = parseFloat(btn.dataset.productPrice);
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+
+            // Hier speichern!
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            updateCartCount();
+
+            // Add visual feedback
+            btn.innerHTML = '<i class="bx bx-check"></i> Added';
+            btn.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+            btn.classList.add('bg-green-500', 'hover:bg-green-600');
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bx bx-cart-alt"></i> Add';
+                btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                btn.classList.add('bg-teal-600', 'hover:bg-teal-700');
+            }, 2000);
+        });
+    });
+    // Warenkorb-Anzahl aktualisieren
+    function updateCartCount() {
+        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountEl.textContent = totalCount;
+
+        // Puls-Animation beim Hinzufügen
+        cartButton.classList.add('animate-pulse');
+        setTimeout(() => {
+            cartButton.classList.remove('animate-pulse');
+        }, 300);
+    }
+
+    // Warenkorb-Modal-Inhalt aktualisieren
+    function updateCartDisplay() {
+        cartItemsContainer.innerHTML = '';
+        let totalPrice = 0;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+          <div class="text-center py-8">
+            <i class='bx bx-coffee-togo text-4xl text-gray-400 mb-4'></i>
+            <p class="text-gray-600">Deine Tee-Auswahl ist leer</p>
+          </div>
+        `;
+            cartTotalPriceEl.textContent = '0 Fr.';
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const itemTotal = (item.price * item.quantity).toFixed(2);
+            totalPrice += parseFloat(itemTotal);
+
+            const itemEl = document.createElement('div');
+            itemEl.className = 'flex justify-between items-center border-b border-gray-200 pb-4';
+            itemEl.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <div class="bg-teal-100 text-teal-800 p-2 rounded-lg">
+              <i class='bx bx-leaf text-xl'></i>
+            </div>
+            <div>
+              <p class="font-medium text-gray-800">${item.name}</p>
+              <p class="text-sm text-gray-600">${item.price.toFixed(2)} Fr. × ${item.quantity}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span class="font-medium">${itemTotal} Fr.</span>
+            <button data-index="${index}" class="remove-item text-gray-500 hover:text-red-500 focus:outline-none transition">
+              <i class="bx bx-trash text-xl"></i>
+            </button>
+          </div>
+        `;
+            cartItemsContainer.appendChild(itemEl);
+        });
+
+        cartTotalPriceEl.textContent = totalPrice.toFixed(2) + ' Fr.';
+
+        // Entfernen-Listener anhängen
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = parseInt(btn.dataset.index, 10);
+                cart.splice(idx, 1);
+                updateCartCount();
+                updateCartDisplay();
+            });
+        });
+    }
+</script>
+</body>
+</html>

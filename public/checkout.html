@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | Luxury Tea Emporium</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    html { font-family: 'Inter', sans-serif; }
+    .animate-fadeIn { animation: fadeIn 0.5s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .text-teal-600 { color: #0d9488; }
+    .bg-teal-600 { background-color: #0d9488; }
+    .hover\:bg-teal-700:hover { background-color: #0f766e; }
+  </style>
+</head>
+<body class="bg-teal-50 min-h-screen flex flex-col">
+<!-- Navbar -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="dashboard.html" class="flex items-center">
+      <i class='bx bx-leaf text-teal-600 text-3xl mr-2'></i>
+      <span class="text-xl font-bold text-teal-600">Luxury Tea Emporium</span>
+    </a>
+  </div>
+</header>
+<main class="flex-grow py-12">
+  <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-12">Ihre Bestellung</h1>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Warenkorb -->
+      <div class="bg-white rounded-xl shadow-lg p-6 animate-fadeIn">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 border-b pb-2">Warenkorb</h2>
+        <div id="checkout-cart-items" class="space-y-4 mb-6"></div>
+        <div class="space-y-3 border-t pt-4">
+          <div class="flex justify-between">
+            <p>Zwischensumme</p>
+            <p id="subtotal">0.00 Fr.</p>
+          </div>
+          <div class="flex justify-between">
+            <p>Versand</p>
+            <p id="shipping">6.90 Fr.</p>
+          </div>
+          <div class="flex justify-between font-bold text-lg mt-2 pt-2 border-t">
+            <p>Gesamt</p>
+            <p id="total" class="text-teal-600">6.90 Fr.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-4">Get in Touch</h3>
+        <form
+                action="https://formspree.io/f/xzzgzydl"
+                method="POST"
+                class="space-y-6 bg-white rounded-xl shadow-lg p-8"
+        >
+          <div>
+            <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Name</label>
+            <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+                    placeholder="Ihr Name"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+            <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+                    placeholder="Ihre Email"
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-gray-700 text-sm font-medium mb-2">Bestellübersicht</label>
+            <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    readonly
+                    class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg bg-gray-100 text-gray-900 focus:outline-none"
+            ></textarea>
+          </div>
+          <div>
+            <label for="user-message" class="block text-gray-700 text-sm font-medium mb-2">Ihre Nachricht (optional)</label>
+            <textarea
+                    id="user-message"
+                    rows="3"
+                    class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none"
+                    placeholder="Ihre Ergänzungen zur Bestellung"
+            ></textarea>
+          </div>
+          <button
+                  type="submit"
+                  class="w-full px-6 py-3 bg-teal-600 text-white font-bold rounded-lg hover:bg-teal-700 transition"
+          >
+            Bestellung abschicken
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Warenkorb aus localStorage laden
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const shipping = 6.90;
+    let subtotal = 0;
+
+    // Warenkorb-Anzeige aktualisieren
+    const cartItemsEl = document.getElementById('checkout-cart-items');
+    const subtotalEl = document.getElementById('subtotal');
+    const shippingEl = document.getElementById('shipping');
+    const totalEl = document.getElementById('total');
+
+    cartItemsEl.innerHTML = '';
+    if (cart.length === 0) {
+      cartItemsEl.innerHTML = '<p class="text-gray-600">Ihr Warenkorb ist leer.</p>';
+    } else {
+      cart.forEach(item => {
+        const itemTotal = (item.price * item.quantity).toFixed(2);
+        subtotal += parseFloat(itemTotal);
+        const div = document.createElement('div');
+        div.className = 'flex justify-between items-center border-b border-gray-200 pb-2';
+        div.innerHTML = `
+        <div>
+          <p class="font-medium text-gray-800">${item.quantity}x ${item.name}</p>
+          <p class="text-sm text-gray-600">${item.price.toFixed(2)} Fr. pro Stück</p>
+        </div>
+        <span class="font-medium">${itemTotal} Fr.</span>
+      `;
+        cartItemsEl.appendChild(div);
+      });
+    }
+    subtotalEl.textContent = subtotal.toFixed(2) + ' Fr.';
+    shippingEl.textContent = shipping.toFixed(2) + ' Fr.';
+    totalEl.textContent = (subtotal + shipping).toFixed(2) + ' Fr.';
+
+    // Bestellübersicht für das readonly-Textfeld generieren
+    if (cart.length > 0) {
+      let messageText = cart
+              .map(item => `${item.quantity}x ${item.name} (${item.price.toFixed(2)} Fr.)`)
+              .join('\n');
+      messageText += `\nVersand: ${shipping.toFixed(2)} Fr.`;
+      messageText += `\nGesamtbetrag: ${(subtotal + shipping).toFixed(2)} Fr.`;
+
+      const messageField = document.getElementById('message');
+      if (messageField) {
+        messageField.value = messageText;
+      }
+    }
+
+    // Beim Absenden: beide Felder zusammenführen
+    const form = document.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const messageField = document.getElementById('message');
+        const userMessage = document.getElementById('user-message');
+        if (messageField && userMessage && userMessage.value.trim()) {
+          messageField.value = messageField.value + '\n\n' + userMessage.value;
+        }
+      });
+    }
+  });
+</script>
+</body>
+</html>

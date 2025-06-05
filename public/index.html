@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Luxury Tea Emporium</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Boxicons for Icons -->
+    <link href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" rel="stylesheet" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        html { font-family: 'Inter', sans-serif; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25%      { transform: translateX(-10px); }
+            75%      { transform: translateX(10px); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-fadeIn { animation: fadeIn 0.5s ease-in-out; }
+        .shake-extreme { animation: shake 0.6s; }
+        .spin-success { animation: spinSuccess 0.8s ease-out; }
+
+        /* Custom Tea-themed colors */
+        .bg-teal-50 { background-color: #f0fdfa; }
+        .bg-teal-100 { background-color: #ccfbf1; }
+        .bg-teal-600 { background-color: #0d9488; }
+        .bg-teal-700 { background-color: #0f766e; }
+        .text-teal-600 { color: #0d9488; }
+        .hover\:bg-teal-700:hover { background-color: #0f766e; }
+    </style>
+</head>
+<body class="bg-teal-50 min-h-screen">
+
+<!-- Navbar -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-4 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center">
+            <i class='bx bx-leaf text-teal-600 text-3xl mr-2'></i>
+            <span class="text-xl font-bold text-teal-600">Luxury Tea Emporium</span>
+        </a>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow py-12">
+    <section class="max-w-md mx-auto px-6 sm:px-8 lg:px-10">
+        <div class="bg-white rounded-xl shadow-lg p-8 animate-fadeIn">
+            <div class="text-center mb-8">
+                <i class='bx bx-lock text-teal-600 text-5xl mb-4'></i>
+                <h2 class="text-2xl font-bold text-gray-800">🔐 Kunden Login</h2>
+                <p class="text-gray-600 mt-2">Melden Sie sich mit Ihrem Konto an</p>
+            </div>
+
+            <form id="authForm" novalidate class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="username">
+                        👤 Benutzername
+                    </label>
+                    <input
+                            type="text"
+                            name="username"
+                            placeholder="Ihr Benutzername"
+                            required
+                            autocomplete="username"
+                            class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="password">
+                        🔒 Passwort
+                    </label>
+                    <input
+                            type="password"
+                            name="password"
+                            placeholder="Ihr Passwort"
+                            required
+                            autocomplete="current-password"
+                            minlength="6"
+                            class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                    >
+                </div>
+
+                <div id="message" class="text-sm min-h-[1.5rem] text-center font-medium"></div>
+
+                <button
+                        type="submit"
+                        id="submitButton"
+                        class="w-full px-4 py-3 text-base font-bold text-white bg-teal-600 rounded-lg hover:bg-teal-700 transition flex justify-center items-center gap-2"
+                >
+                    <span id="spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <span id="buttonText">Login ➡️</span>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <button
+                        id="toggleForm"
+                        class="text-teal-600 font-medium hover:text-teal-800 transition"
+                >
+                    Noch kein Konto? Jetzt registrieren 🔁
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('authForm');
+        const toggle = document.getElementById('toggleForm');
+        const message = document.getElementById('message');
+        const submitBtn = document.getElementById('submitButton');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('buttonText');
+        const title = document.querySelector('h2');
+
+        let mode = 'login';
+
+        toggle.addEventListener('click', () => {
+            mode = mode === 'login' ? 'register' : 'login';
+            title.textContent = mode === 'login' ? '🔐 Kunden Login' : '📝 Konto erstellen';
+            buttonText.textContent = mode === 'login' ? 'Login ➡️' : 'Registrieren 📝';
+            toggle.textContent = mode === 'login'
+                ? 'Noch kein Konto? Jetzt registrieren 🔁'
+                : 'Bereits registriert? Zum Login 🔁';
+            message.textContent = '';
+            document.title = mode === 'login' ? 'Login | Luxury Tea Emporium' : 'Registrierung | Luxury Tea Emporium';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            message.textContent = '';
+            message.className = 'text-sm min-h-[1.5rem] text-center font-medium';
+
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            // Show spinner
+            spinner.classList.remove('hidden');
+            buttonText.textContent = '';
+            submitBtn.disabled = true;
+
+            try {
+                const res = await fetch(`/${mode}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                const text = await res.text();
+
+                // Hide spinner
+                spinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                buttonText.textContent = mode === 'login' ? 'Login ➡️' : 'Registrieren 📝';
+
+                if (res.ok) {
+                    message.textContent = `✅ ${text}`;
+                    message.classList.add('text-green-600');
+
+                    // Success animation
+                    form.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        form.classList.remove('animate-pulse');
+                        // Redirect to account page
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    message.textContent = `❌ ${text}`;
+                    message.classList.add('text-red-500');
+                    form.classList.add('shake-extreme');
+                    setTimeout(() => form.classList.remove('shake-extreme'), 600);
+                }
+            } catch (err) {
+                spinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                buttonText.textContent = mode === 'login' ? 'Login ➡️' : 'Registrieren 📝';
+                message.textContent = '❌ Fehler bei der Verbindung zum Server';
+                message.classList.add('text-red-500');
+                form.classList.add('shake-extreme');
+                setTimeout(() => form.classList.remove('shake-extreme'), 600);
+            }
+        });
+    });
+</script>
+</body>
+</html>
