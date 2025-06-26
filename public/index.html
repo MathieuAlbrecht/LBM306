@@ -118,6 +118,8 @@
     </section>
 </main>
 
+
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const form = document.getElementById('authForm');
@@ -129,9 +131,6 @@
         const title = document.querySelector('h2');
 
         let mode = 'login';
-
-        // Configuration for server URL
-        const SERVER_URL = 'http://localhost:3000';
 
         toggle.addEventListener('click', () => {
             mode = mode === 'login' ? 'register' : 'login';
@@ -157,7 +156,7 @@
             submitBtn.disabled = true;
 
             try {
-                const res = await fetch(`${SERVER_URL}/${mode}`, {
+                const res = await fetch(`/${mode}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data),
