@@ -7,6 +7,10 @@
     {
       "username": "ylli",
       "password": "$2b$10$rYtLnJdbd5tVQ1Bz0rkNhO/HkYkRpo6GDpNUGUnh.aIdA6UP8wnvK"
+    },
+    {
+      "username": "admin",
+      "password": "$2b$10$0Vr9KCbBxwjvu47OevjkxeJy5w8.ncc7USVaH.npqx/WGlNwCwguu"
     }
   ]
 }

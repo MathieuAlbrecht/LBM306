@@ -114,15 +114,22 @@
   document.addEventListener('DOMContentLoaded', () => {
     // Warenkorb aus localStorage laden
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // Sicherstellen, dass Preise als Zahlen behandelt werden
+    cart.forEach(item => {
+      item.price = parseFloat(item.price);
+    });
+
     const shipping = 6.90;
     let subtotal = 0;
 
-    // Warenkorb-Anzeige aktualisieren
+    // Elemente holen
     const cartItemsEl = document.getElementById('checkout-cart-items');
     const subtotalEl = document.getElementById('subtotal');
     const shippingEl = document.getElementById('shipping');
     const totalEl = document.getElementById('total');
 
+    // Warenkorb anzeigen
     cartItemsEl.innerHTML = '';
     if (cart.length === 0) {
       cartItemsEl.innerHTML = '<p class="text-gray-600">Ihr Warenkorb ist leer.</p>';
@@ -133,41 +140,41 @@
         const div = document.createElement('div');
         div.className = 'flex justify-between items-center border-b border-gray-200 pb-2';
         div.innerHTML = `
-        <div>
-          <p class="font-medium text-gray-800">${item.quantity}x ${item.name}</p>
-          <p class="text-sm text-gray-600">${item.price.toFixed(2)} Fr. pro Stück</p>
-        </div>
-        <span class="font-medium">${itemTotal} Fr.</span>
-      `;
+          <div>
+            <p class="font-medium text-gray-800">${item.quantity}× ${item.name}</p>
+            <p class="text-sm text-gray-600">${item.price.toFixed(2)} Fr. pro Stück</p>
+          </div>
+          <span class="font-medium">${itemTotal} Fr.</span>
+        `;
         cartItemsEl.appendChild(div);
       });
     }
+
+    // Zusammenfassungen aktualisieren
     subtotalEl.textContent = subtotal.toFixed(2) + ' Fr.';
     shippingEl.textContent = shipping.toFixed(2) + ' Fr.';
     totalEl.textContent = (subtotal + shipping).toFixed(2) + ' Fr.';
 
-    // Bestellübersicht für das readonly-Textfeld generieren
+    // Bestellübersicht für readonly-Feld
     if (cart.length > 0) {
       let messageText = cart
-              .map(item => `${item.quantity}x ${item.name} (${item.price.toFixed(2)} Fr.)`)
+              .map(item => `${item.quantity}× ${item.name} (${item.price.toFixed(2)} Fr.)`)
               .join('\n');
       messageText += `\nVersand: ${shipping.toFixed(2)} Fr.`;
       messageText += `\nGesamtbetrag: ${(subtotal + shipping).toFixed(2)} Fr.`;
 
       const messageField = document.getElementById('message');
-      if (messageField) {
-        messageField.value = messageText;
-      }
+      if (messageField) messageField.value = messageText;
     }
 
-    // Beim Absenden: beide Felder zusammenführen
+    // Beim Absenden: Nutzernachricht anhängen
     const form = document.querySelector('form');
     if (form) {
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', e => {
         const messageField = document.getElementById('message');
         const userMessage = document.getElementById('user-message');
-        if (messageField && userMessage && userMessage.value.trim()) {
-          messageField.value = messageField.value + '\n\n' + userMessage.value;
+        if (messageField && userMessage.value.trim()) {
+          messageField.value += '\n\n' + userMessage.value;
         }
       });
     }
